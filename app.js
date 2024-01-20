@@ -1,8 +1,8 @@
 //where the real logic is.
 
 const readline = require('readline');
-const products = require('./productItems');
-const {cart, addCart, removeItem, calculateTotal} = require('./Cart.js');
+const items = require('./productItems');
+const {cart, addToCart, removeItemFromCart, calculateTotalItems} = require('./Cart.js');
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -13,11 +13,11 @@ const rl = readline.createInterface({
  function showProducts() {
     console.log("Available Products:");
 
-    products.forEach(product => console.log(`${product.id}, ${product.name}, ${product.price}, ${product.quantity}`));
+    items.forEach(product => console.log(`${product.id}, ${product.name}, ${product.price}, ${product.quantity}`));
 
     console.log("Your cart:");
     cart.forEach(item => console.log(`${item.name} x${item.quantity}`));
-    console.log(`\nTotal: $${calculateTotal()}\n`);
+    console.log(`\nTotal: $${calculateTotalItems()}\n`);
 
  }
 
@@ -30,11 +30,11 @@ const rl = readline.createInterface({
          rl.close();
        }else {
           const productId = parseInt(answer);
-           const product = products.find(p => p.id === productId );
+           const product = items.find(p => p.id === productId );
 
            if(product) {
             rl.question( 'Enter the quantity: ', quantity => {
-              addCart(product, parseInt(quantity));
+              addToCart(product, parseInt(quantity));
               Shopping();
             });
            } else {
